@@ -6,7 +6,7 @@ config defaults
 	option forward 'REJECT'
 	option fullcone '1'
 	option flow_offloading '1'
-	option flow_offloading_hw '0'
+	option flow_offloading_hw '1'
 
 config zone
 	option name 'lan'
@@ -124,35 +124,21 @@ config rule
 	option proto 'udp'
 	option target 'ACCEPT'
 
+config rule
+	option name 'Support-UDP-Traceroute'
+	option src 'wan'
+	option dest_port '33434:33689'
+	option proto 'udp'
+	option family 'ipv4'
+	option target 'REJECT'
+	option enabled 'false'
+
 config include
 	option path '/etc/firewall.user'
-
-config include 'miniupnpd'
-	option type 'script'
-	option path '/usr/share/miniupnpd/firewall.include'
-	option family 'any'
-	option reload '1'
-
-config include 'adbyby'
-	option type 'script'
-	option path '/var/etc/adbyby.include'
-	option reload '1'
-
-config rule 'adblock'
-	option name 'adblock'
-	option target 'DROP'
-	option src 'wan'
-	option proto 'tcp'
-	option dest_port '8118'
 
 config include 'mia'
 	option type 'script'
 	option path '/etc/mia.include'
-	option reload '1'
-
-config include 'shadowsocksr'
-	option type 'script'
-	option path '/var/etc/shadowsocksr.include'
 	option reload '1'
 
 config include 'unblockmusic'
@@ -166,4 +152,3 @@ config rule 'kms'
 	option src 'wan'
 	option proto 'tcp'
 	option dest_port '1688'
-
